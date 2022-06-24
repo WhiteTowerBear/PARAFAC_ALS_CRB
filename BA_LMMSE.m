@@ -1,0 +1,9 @@
+function [Hs_est,Hr_est]=BA_LMMSE(K,P,M,Z_KP_M,Z_PM_K,Phi,Hr_est,var_noise)
+Cs_p=var_noise*eye(K*P);
+temp_s=kr(Phi,Hr_est);
+T_s=inv(temp_s*temp_s'+Cs_p)*temp_s;
+Hs_est=T_s'*Z_KP_M;
+Cr_p=var_noise*eye(P*M);
+temp_r=kr(Hs_est.',Phi);
+T_r=inv(temp_r*temp_r'+Cr_p)*temp_r;
+Hr_est=(T_r'*Z_PM_K).';
